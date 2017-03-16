@@ -9,28 +9,37 @@ import nz.co.ipayroll.sdk.timesheet.TimesheetRepository;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 @Configuration
+@PropertySource("classpath:application.properties")
+@ComponentScan("nz.co.ipayroll.sdk")
 public class ApiConfiguration {
 
-    // TODO: 17/03/17 move to a property file
-    public static final String OAUTH_BASE_URL = "http://systest.ipayroll.co.nz/oauth/";
-    public static final String API_BASE_URL = "http://systest.ipayroll.co.nz/api/v1/";
+    @Value("${ipayroll_server}")
+    private String baseUrl;
+
+
+    public static final String OAUTH_RESOURCE = "/oauth/";
+    public static final String API_BASE_RESOURCE = "/api/v1/";
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
     @Bean
     public Retrofit ipayrollRetrofit() {
         Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
+                .baseUrl(baseUrl + API_BASE_RESOURCE)
                 .addConverterFactory(GsonConverterFactory.create());
 
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
-        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
         OkHttpClient client = httpClient
                 .addInterceptor(chain -> {
@@ -43,6 +52,11 @@ public class ApiConfiguration {
                 .addInterceptor(logInterceptor).build();
 
         return retrofitBuilder.client(client).build();
+    }
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 
     @Bean
@@ -65,7 +79,7 @@ public class ApiConfiguration {
     @Bean
     public AccessTokenRepository accessTokenRepository(){
         Retrofit retrofit= new Retrofit.Builder()
-                .baseUrl(OAUTH_BASE_URL)
+                .baseUrl(baseUrl + OAUTH_RESOURCE)
                 .addConverterFactory(GsonConverterFactory.create()).build();
 
     return retrofit.create(AccessTokenRepository.class);
