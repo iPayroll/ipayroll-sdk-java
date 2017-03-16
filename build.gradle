@@ -1,0 +1,69 @@
+buildscript {
+    ext {
+        springBootVersion = '1.4.1.RELEASE'
+        springVersion = '4.3.4.RELEASE'
+        springHateoasVersion = '0.18.0.RELEASE'
+        javaVersion = '1.8'
+        jbotVersion = '3.0.2'
+        retrofitVersion = '2.1.0'
+        okHttpVersion = '3.3.0'
+        jodaTimeVersion = '2.9.4'
+        quartzVersion = '2.2.1'
+        jedisVersion = '2.8.1'
+        springDataRedisVersion = '1.7.5.RELEASE'
+        jacksonVersion = '2.8.7'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+
+idea {
+    project {
+        //if you want to set specific jdk and language level
+        jdkName = javaVersion
+        languageLevel = javaVersion
+
+        //you can configure the VCS used by the project
+        vcs = 'Git'
+    }
+}
+
+jar {
+    baseName = 'ipayroll-restful-sdk'
+    version = '0.0.1.beta'
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    // general
+    compile("org.springframework.hateoas:spring-hateoas:${springHateoasVersion}")
+    compile("joda-time:joda-time:${jodaTimeVersion}")
+
+    // retrofit
+    compile("com.squareup.retrofit2:retrofit:${retrofitVersion}")
+    compile("com.squareup.retrofit2:converter-gson:${retrofitVersion}")
+    compile("com.squareup.okhttp3:logging-interceptor:${okHttpVersion}")
+    compile("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
+
+
+    // tests
+//    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
