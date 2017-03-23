@@ -1,0 +1,21 @@
+version 'unspecified'
+
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    // general
+    compile("org.springframework.hateoas:spring-hateoas:${springHateoasVersion}")
+    compile("joda-time:joda-time:${jodaTimeVersion}")
+
+    // retrofit
+    compile("com.squareup.retrofit2:retrofit:${retrofitVersion}")
+    compile("com.squareup.retrofit2:converter-gson:${retrofitVersion}")
+    compile("com.squareup.okhttp3:logging-interceptor:${okHttpVersion}")
+    compile("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
+}
