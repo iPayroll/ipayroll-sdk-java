@@ -11,7 +11,7 @@ All of iPayroll Restful Api documentation can be found at [here](http://dev.ipay
 
 # How to use
 
-Create a `application.properties` file and include it in your classpath. An example is under:
+Create a `application.properties` file and include it in your classpath. An example is here:
 
 ```
 # the ipayroll server you want query to
