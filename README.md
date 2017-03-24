@@ -12,6 +12,7 @@ All of iPayroll Restful Api documentation can be found at [here](http://dev.ipay
 # How to use
 
 1. create a `application.properties` file and include it in your classpath. An example is under:
+
 ```
 # the ipayroll server you want query to
 ipayroll_server=http://secure2.ipayroll.co.nz
@@ -27,6 +28,7 @@ ipayroll_redirect_uri=http://10.104.6.249:8090/ipayroll/callback
 ```
 
 2. if you are using [spring](http://google.co.nz), you need include the sdk's configuration `nz.co.ipayroll.api.sdk.configuration.ApiConfiguration`. For example:
+
 ```java
 package nz.co.ipayroll.sdk.example;
 
@@ -43,6 +45,7 @@ public class ExampleConfiguration extends WebMvcConfigurerAdapter {
 
 3. you will need to create a callback API for iPayroll to use to pass the authentication. Notice, the path has to be same as the one you defined in your `applicaiton.proerties`.
 For example:
+
 ```java
     @Autowired
     private AccessTokenService tokenService;
@@ -58,6 +61,7 @@ For example:
 4. Once you have a token and you need save it properly. If the token is refreshed, the old token will be invalid to use.
 5. With a valid token, you can interact with iPayroll services with your token. Since we are using [retrofit]() for the api calls,
 you can see more detail for either async or sync calls from retrofit api document. Here is an example:
+
 ```java
  @Autowired
  private CostCentreRepository costCentreRepository;
