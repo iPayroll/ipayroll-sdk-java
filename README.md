@@ -83,6 +83,8 @@ You can either contact your paymaster or drop an email to our (api email)
 
 # How to run example
 
+## Build Example Project
+
 Checkout the project by `git clone [our repository url]`
 
 If you are using any java IDE such as Intellij, you can
@@ -95,6 +97,9 @@ Build by using `gradle jar`
 
     1. navigate to the directory contains you sdk-example.jar
     2. run `java -jar sdk-example.jar`
+
+
+## Use Example Project
 
 Go to your localhost:8080 you will see a page with two links.
 
