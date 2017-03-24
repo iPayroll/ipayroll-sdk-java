@@ -101,11 +101,11 @@ Build by using `gradle jar`
 
 ## Use Example Project
 
-Go to your localhost:8080 you will see a page with two links.
+1. Go to your `localhost:8080` you will see a page with two links.
 
-Click authenticate link to gain a token.
+2. Click authenticate link to gain a token.
 
-Once you have granted a access token, you can come back to the same page and click get costcenters.
+3. Once you have granted a access token, you can come back to the same page and click get costcenters.
 
 
 # Dependencies
