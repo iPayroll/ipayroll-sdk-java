@@ -110,18 +110,18 @@ Once you have granted a access token, you can come back to the same page and cli
 
 # Dependencies
 
-springBootVersion = '1.4.1.RELEASE'
-springVersion = '4.3.4.RELEASE'
-springHateoasVersion = '0.18.0.RELEASE'
-javaVersion = '1.8'
-jbotVersion = '3.0.2'
-retrofitVersion = '2.1.0'
-okHttpVersion = '3.3.0'
-jodaTimeVersion = '2.9.4'
-quartzVersion = '2.2.1'
-jedisVersion = '2.8.1'
-springDataRedisVersion = '1.7.5.RELEASE'
-jacksonVersion = '2.8.7'
+- springBootVersion = '1.4.1.RELEASE'
+- springVersion = '4.3.4.RELEASE'
+- springHateoasVersion = '0.18.0.RELEASE'
+- javaVersion = '1.8'
+- jbotVersion = '3.0.2'
+- retrofitVersion = '2.1.0'
+- okHttpVersion = '3.3.0'
+- jodaTimeVersion = '2.9.4'
+- quartzVersion = '2.2.1'
+- jedisVersion = '2.8.1'
+- springDataRedisVersion = '1.7.5.RELEASE'
+- jacksonVersion = '2.8.7'
 
 # Contribution
 
