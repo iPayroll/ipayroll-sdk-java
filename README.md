@@ -84,12 +84,12 @@ You can either contact your paymaster or drop an email to our (api email)
 
 1. checkout the project by `git clone [our repository url]`
 2a. if you are using any java IDE such as Intellij, you can
-    1. add application.properties to your project and make sure it's on your classpath
-    2. navigate to sdk-example/main/java/nz/co/ipayroll/sdk/example/Application.java
+    2a.1. add application.properties to your project and make sure it's on your classpath
+    2a.2. navigate to sdk-example/main/java/nz/co/ipayroll/sdk/example/Application.java
      and start the the main method.
 2b. build by using `gradle jar`
-    1. navigate to the directory contains you sdk-example.jar
-    2. run `java -jar sdk-example.jar`
+    2b.1. navigate to the directory contains you sdk-example.jar
+    2b.2. run `java -jar sdk-example.jar`
 3. go to your localhost:8080 you will see a page with two links.
 4. click authenticate link to gain a token.
 5. once you have granted a access token, you can come back to the same page and click get costcenters.
