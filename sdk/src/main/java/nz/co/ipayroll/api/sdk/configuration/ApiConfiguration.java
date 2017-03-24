@@ -1,5 +1,7 @@
 package nz.co.ipayroll.api.sdk.configuration;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import nz.co.ipayroll.api.sdk.oauth.AccessTokenRepository;
 import nz.co.ipayroll.api.sdk.costcentre.CostCentreRepository;
 import nz.co.ipayroll.api.sdk.payrate.EmployeePayRateRepository;
@@ -78,9 +80,10 @@ public class ApiConfiguration {
 
     @Bean
     public AccessTokenRepository accessTokenRepository(){
+        Gson gson = new GsonBuilder().setLenient().create();
         Retrofit retrofit= new Retrofit.Builder()
                 .baseUrl(baseUrl + OAUTH_RESOURCE)
-                .addConverterFactory(GsonConverterFactory.create()).build();
+                .addConverterFactory(GsonConverterFactory.create(gson)).build();
 
     return retrofit.create(AccessTokenRepository.class);
     }

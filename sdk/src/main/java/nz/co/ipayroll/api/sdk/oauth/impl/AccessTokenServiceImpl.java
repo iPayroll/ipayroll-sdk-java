@@ -16,6 +16,8 @@ import java.io.IOException;
 public class AccessTokenServiceImpl implements AccessTokenService {
     private static final Logger logger = LoggerFactory.getLogger(AccessTokenServiceImpl.class);
 
+    private static final String GRANT_TYPE = "authorization_code";
+
     @Autowired
     private AccessTokenRepository accessTokenRepository;
 
@@ -25,13 +27,10 @@ public class AccessTokenServiceImpl implements AccessTokenService {
     private String clientId;
     @Value("${ipayroll_client_secret}")
     private String  clientSecret;
-    @Value("${ipayroll_grant_type}")
-    private String grantType;
 
     @Override
     public AccessToken getAccessToken(String code) throws IOException {
-        Call<AccessToken> call = accessTokenRepository.token(grantType, clientId, clientSecret, code, redirectUrl);
-
+        Call<AccessToken> call = accessTokenRepository.token(GRANT_TYPE, clientId, clientSecret, code, redirectUrl);
         return call.execute().body();
     }
 }
