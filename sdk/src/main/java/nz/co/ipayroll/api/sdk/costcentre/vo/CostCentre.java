@@ -1,9 +1,11 @@
 package nz.co.ipayroll.api.sdk.costcentre.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.hateoas.ResourceSupport;
 
 import java.io.Serializable;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CostCentre extends ResourceSupport implements Serializable {
 
     private static final long serialVersionUID = 1L;
