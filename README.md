@@ -125,4 +125,4 @@ Build by using `gradle jar`
 
 # Contribution
 
-Pull request are welcome.
+Pull requests are welcome.
