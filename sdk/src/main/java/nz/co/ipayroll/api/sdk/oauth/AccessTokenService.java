@@ -7,4 +7,6 @@ import java.io.IOException;
 public interface AccessTokenService {
 
     AccessToken getAccessToken(String code) throws IOException;
+
+    AOuthClientConfiguration getConfiguration();
 }

@@ -5,6 +5,7 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.stereotype.Repository;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -22,7 +23,6 @@ public interface TimesheetRepository {
             @Path("employeeId") String employeeId
     );
 
-
     @GET("timesheets")
     Call<PagedResources<Timesheet>> getAll(
             @Header("Authorization") String accessToken,
@@ -35,6 +35,12 @@ public interface TimesheetRepository {
     Call<List<Timesheet>> create(
             @Header("Authorization") String accessToken,
             @Body List<Timesheet> timesheets
+    );
+    
+    @DELETE("timesheets/{employeeId}")
+    Call<Void> delete(
+            @Header("Authorization") String accessToken,
+            @Path("employeeId") String employeeId
     );
 
 }

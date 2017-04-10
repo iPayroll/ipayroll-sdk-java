@@ -47,3 +47,10 @@ hs_err_pid*
 # ignore the proejct credentials
 application.properties
 application.yml
+
+# ignore eclipse configuration
+build
+bin
+.classpath
+.project
+.settings

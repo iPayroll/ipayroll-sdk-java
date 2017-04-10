@@ -1,25 +1,31 @@
 package nz.co.ipayroll.api.sdk.oauth.impl;
 
-import nz.co.ipayroll.api.sdk.oauth.vo.AccessToken;
-import nz.co.ipayroll.api.sdk.oauth.AccessTokenRepository;
-import nz.co.ipayroll.api.sdk.oauth.AccessTokenService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import retrofit2.Call;
 
-import java.io.IOException;
+import nz.co.ipayroll.api.sdk.error.Error;
+import nz.co.ipayroll.api.sdk.error.ErrorService;
+import nz.co.ipayroll.api.sdk.error.exception.RestClientException;
+import nz.co.ipayroll.api.sdk.oauth.AOuthClientConfiguration;
+import nz.co.ipayroll.api.sdk.oauth.AccessTokenRepository;
+import nz.co.ipayroll.api.sdk.oauth.AccessTokenService;
+import nz.co.ipayroll.api.sdk.oauth.vo.AccessToken;
+import retrofit2.Call;
+import retrofit2.Response;
 
 @Service
 public class AccessTokenServiceImpl implements AccessTokenService {
-    private static final Logger logger = LoggerFactory.getLogger(AccessTokenServiceImpl.class);
 
     private static final String GRANT_TYPE = "authorization_code";
 
     @Autowired
     private AccessTokenRepository accessTokenRepository;
+
+    @Autowired
+    private ErrorService errorService;
 
     @Value("${ipayroll_redirect_uri}")
     private String redirectUrl;
@@ -27,10 +33,26 @@ public class AccessTokenServiceImpl implements AccessTokenService {
     private String clientId;
     @Value("${ipayroll_client_secret}")
     private String  clientSecret;
-
+    @Value("${ipayroll_server}")
+    private String ipayrollServer;
+    
     @Override
-    public AccessToken getAccessToken(String code) throws IOException {
+    public AccessToken getAccessToken(String code) throws RestClientException, IOException {
         Call<AccessToken> call = accessTokenRepository.token(GRANT_TYPE, clientId, clientSecret, code, redirectUrl);
-        return call.execute().body();
+        Response<AccessToken> response = call.execute();
+        if(!response.isSuccessful()) {
+            Error error = errorService.parseError(response);
+            throw new RestClientException(error);
+        }
+        return response.body();
+    }
+    
+    @Override
+    public AOuthClientConfiguration getConfiguration(){
+        AOuthClientConfiguration config = new AOuthClientConfiguration();
+        config.setBaseUrl(ipayrollServer);
+        config.setClientId(clientId);
+        config.setRedirectUri(redirectUrl);
+        return config;
     }
 }

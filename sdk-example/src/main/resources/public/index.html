@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>iPayroll SDK Example</title>
+    <script src="webjars/jquery/3.2.0/jquery.min.js"></script>
+    
 </head>
 <body>
-<a href="http://systest.ipayroll.co.nz/oauth/authorize?response_type=code&client_id=344003b7-0d76-496f-9d24-1ffd0ea01dbc&scope=employees%20leavebalances%20costcentres&redirect_uri=http://10.104.6.249:8100/ipayroll/callback">authenticate</a>
-<br>
-<a href="http://localhost:8100/costcentres">get all costcentres</a>
+	<a id="authorizeLink" href="#">authenticate</a>
+	<br>
+	<a href="http://localhost:8090/costcentres">get all costcentres</a>
+	<br>
+	<a href="http://localhost:8090/timesheets">get all timesheets</a>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$.ajax({
+			    url : 'aouth2/configuration',
+			    type : 'GET',
+				success : function(data, statut){
+					$("#authorizeLink").attr("href", data.authorizeUrl);
+				}
+		    });
+		});
+	</script>
 </body>
 </html>
