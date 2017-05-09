@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.PagedResources;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,15 +56,26 @@ public class DataController {
         PagedResources<Timesheet> timesheets = timesheetRepository.getAll(token.token(), 100, 0).execute().body();
         return timesheets.getContent();
     }
-
-    @RequestMapping(value = "/removeTimesheets")
-    public Collection<Timesheet> removeTimesheets(HttpSession session, String id) throws IOException {
+    
+    @RequestMapping(value = "/timesheets/{employeeId}")
+    public Timesheet getOneTmesheet(HttpSession session, @PathVariable("employeeId") String employeeId) throws IOException {
         AccessToken token = (AccessToken) session.getAttribute(HtmlController.IPAYROLL_TOKEN);
         if(token == null) {
             throw new AccessTokenNotFoundException();
         }
-        timesheetRepository.delete(token.token(), id).execute();
-        return timesheets(session);
+        return timesheetRepository.get(token.token(), employeeId).execute().body();
+    }
+    
+    @RequestMapping(value = "/timesheets/{employeeId}/deleteTransaction/{transactionId}")
+    public Timesheet deleteTransaction(HttpSession session, 
+            @PathVariable("employeeId") String employeeId, 
+            @PathVariable("transactionId") String transactionId) throws IOException {
+        AccessToken token = (AccessToken) session.getAttribute(HtmlController.IPAYROLL_TOKEN);
+        if(token == null) {
+            throw new AccessTokenNotFoundException();
+        }
+        timesheetRepository.delete(token.token(), employeeId, transactionId).execute().body();
+        return getOneTmesheet(session, employeeId);
     }
     
 }

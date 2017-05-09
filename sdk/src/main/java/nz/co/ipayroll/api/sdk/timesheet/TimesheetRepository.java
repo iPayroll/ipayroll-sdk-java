@@ -36,11 +36,12 @@ public interface TimesheetRepository {
             @Header("Authorization") String accessToken,
             @Body List<Timesheet> timesheets
     );
-    
-    @DELETE("timesheets/{employeeId}")
+
+    @DELETE("timesheets/{employeeId}/transactions/{timesheetTransactionId}")
     Call<Void> delete(
             @Header("Authorization") String accessToken,
-            @Path("employeeId") String employeeId
+            @Path("employeeId") String employeeId,
+            @Path("timesheetTransactionId") String timesheetTransactionId
     );
 
 }
