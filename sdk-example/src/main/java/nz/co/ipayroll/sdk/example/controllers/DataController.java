@@ -55,7 +55,7 @@ public class DataController {
         PagedResources<Timesheet> timesheets = timesheetRepository.getAll(token.token(), 100, 0).execute().body();
         return timesheets.getContent();
     }
-    
+
     @RequestMapping(value = "/removeTimesheets")
     public Collection<Timesheet> removeTimesheets(HttpSession session, String id) throws IOException {
         AccessToken token = (AccessToken) session.getAttribute(HtmlController.IPAYROLL_TOKEN);
