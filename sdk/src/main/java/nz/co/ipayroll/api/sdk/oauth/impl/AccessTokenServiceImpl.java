@@ -35,6 +35,9 @@ public class AccessTokenServiceImpl implements AccessTokenService {
     private String  clientSecret;
     @Value("${ipayroll_server}")
     private String ipayrollServer;
+
+    @Value("${ipayroll_scope}")
+    private String scope;
     
     @Override
     public AccessToken getAccessToken(String code) throws RestClientException, IOException {
@@ -53,6 +56,7 @@ public class AccessTokenServiceImpl implements AccessTokenService {
         config.setBaseUrl(ipayrollServer);
         config.setClientId(clientId);
         config.setRedirectUri(redirectUrl);
+        config.setScope(scope);
         return config;
     }
 }

@@ -18,10 +18,15 @@ public interface CostCentreRepository {
 
     @GET("costcentres")
     Call<PagedResources<CostCentre>> getAll(
+            @Header("Authorization") String accessToken
+    );
+
+    @GET("costcentres")
+    Call<PagedResources<CostCentre>> getAll(
             @Header("Authorization") String accessToken,
             @Query("size") int size,
             @Query("page") int page
-            );
+    );
 
     @GET("costcentres/{costcentreId}")
     Call<CostCentre> get(
@@ -34,6 +39,5 @@ public interface CostCentreRepository {
             @Header("Authorization") String accessToken,
             @Body List<CostCentre> costCentres
     );
-
 
 }

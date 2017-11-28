@@ -5,6 +5,7 @@ public class AOuthClientConfiguration {
     private String baseUrl;
     private String clientId;
     private String redirectUri;
+    private String scope;
     
     public String getBaseUrl() {
         return baseUrl;
@@ -30,8 +31,16 @@ public class AOuthClientConfiguration {
         this.redirectUri = ipayrollRedirectUri;
     }
 
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+    }
+
     public String getAuthorizeUrl() {
-        return baseUrl+"/oauth/authorize?response_type=code&client_id="+clientId+"&scope=employees%20leavebalances%20costcentres%20timesheets&redirect_uri="+redirectUri;             
+        return baseUrl+"/oauth/authorize?response_type=code&client_id="+clientId+"&scope="+scope+"&redirect_uri="+redirectUri;
     }
     
 }

@@ -2,11 +2,13 @@ package nz.co.ipayroll.api.sdk.configuration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import nz.co.ipayroll.api.sdk.employee.*;
+import nz.co.ipayroll.api.sdk.leave.request.LeaveRequestRepository;
 import nz.co.ipayroll.api.sdk.oauth.AccessTokenRepository;
 import nz.co.ipayroll.api.sdk.costcentre.CostCentreRepository;
-import nz.co.ipayroll.api.sdk.payrate.EmployeePayRateRepository;
-import nz.co.ipayroll.api.sdk.employee.EmployeeRepository;
-import nz.co.ipayroll.api.sdk.leave.balance.LeaveBalanceRepository;
+import nz.co.ipayroll.api.sdk.payelement.PayElementRepository;
+import nz.co.ipayroll.api.sdk.payroll.PayrollRepository;
+import nz.co.ipayroll.api.sdk.payslip.PayslipRepository;
 import nz.co.ipayroll.api.sdk.timesheet.TimesheetRepository;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -20,7 +22,10 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import java.util.concurrent.TimeUnit;
+
 @Configuration
+@PropertySource("classpath:application.default.properties")
 @PropertySource("classpath:application.properties")
 @ComponentScan("nz.co.ipayroll.api.sdk")
 public class ApiConfiguration {
@@ -51,7 +56,11 @@ public class ApiConfiguration {
 
                     return chain.proceed(requestBuilder.build());
                 })
-                .addInterceptor(logInterceptor).build();
+                .addInterceptor(logInterceptor)
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                .build();
 
         return retrofitBuilder.client(client).build();
     }
@@ -62,29 +71,67 @@ public class ApiConfiguration {
     }
 
     @Bean
+    public CostCentreRepository costCentreRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(CostCentreRepository.class);
+    }
+
+    @Bean
+    public EmployeeCustomFieldRepository employeeCustomFieldRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(EmployeeCustomFieldRepository.class);
+    }
+
+    @Bean
     public EmployeeRepository employeeRepository(Retrofit ipayrollRetrofit) {
         return ipayrollRetrofit.create(EmployeeRepository.class);
     }
 
     @Bean
-    public LeaveBalanceRepository leaveBalanceRepository(Retrofit ipayrollRetrofit) { return ipayrollRetrofit.create(LeaveBalanceRepository.class);}
+    public EmployeeLeaveBalanceRepository employeeLeaveBalanceRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(EmployeeLeaveBalanceRepository.class);
+    }
 
     @Bean
-    public CostCentreRepository costCentreRepository(Retrofit ipayrollRetrofit) { return ipayrollRetrofit.create(CostCentreRepository.class);}
+    public EmployeeLeaveRequestRepository employeeLeaveRequestRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(EmployeeLeaveRequestRepository.class);
+    }
 
     @Bean
-    public EmployeePayRateRepository employeePayRateRepository(Retrofit ipayrollRetrofit) { return ipayrollRetrofit.create(EmployeePayRateRepository.class);}
+    public EmployeePayRateRepository employeePayRateRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(EmployeePayRateRepository.class);
+    }
 
     @Bean
-    public TimesheetRepository timesheetRepository(Retrofit ipayrollRetrofit) { return ipayrollRetrofit.create(TimesheetRepository.class);}
+    public LeaveRequestRepository leaveRequestRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(LeaveRequestRepository.class);
+    }
 
     @Bean
-    public AccessTokenRepository accessTokenRepository(){
+    public PayElementRepository payElementRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(PayElementRepository.class);
+    }
+
+    @Bean
+    public PayrollRepository payrollRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(PayrollRepository.class);
+    }
+
+    @Bean
+    public PayslipRepository payslipRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(PayslipRepository.class);
+    }
+
+    @Bean
+    public TimesheetRepository timesheetRepository(Retrofit ipayrollRetrofit) {
+        return ipayrollRetrofit.create(TimesheetRepository.class);
+    }
+
+    @Bean
+    public AccessTokenRepository accessTokenRepository() {
         Gson gson = new GsonBuilder().setLenient().create();
-        Retrofit retrofit= new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl + OAUTH_RESOURCE)
                 .addConverterFactory(GsonConverterFactory.create(gson)).build();
 
-    return retrofit.create(AccessTokenRepository.class);
+        return retrofit.create(AccessTokenRepository.class);
     }
 }

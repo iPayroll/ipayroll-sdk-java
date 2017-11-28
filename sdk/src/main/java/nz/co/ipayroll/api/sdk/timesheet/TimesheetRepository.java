@@ -17,10 +17,9 @@ import java.util.List;
 @Repository
 public interface TimesheetRepository {
 
-    @GET("timesheets/{employeeId}")
-    Call<Timesheet> get(
-            @Header("Authorization") String accessToken,
-            @Path("employeeId") String employeeId
+    @GET("timesheets")
+    Call<PagedResources<Timesheet>> getAll(
+            @Header("Authorization") String accessToken
     );
 
     @GET("timesheets")
@@ -30,6 +29,11 @@ public interface TimesheetRepository {
             @Query("page") int page
     );
 
+    @GET("timesheets/{employeeId}")
+    Call<Timesheet> get(
+            @Header("Authorization") String accessToken,
+            @Path("employeeId") String employeeId
+    );
 
     @POST("timesheets")
     Call<List<Timesheet>> create(

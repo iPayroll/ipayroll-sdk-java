@@ -1,6 +1,7 @@
 package nz.co.ipayroll.api.sdk.employee.vo;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Address implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -67,5 +68,38 @@ public class Address implements Serializable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(addressLine1, address.addressLine1) &&
+                Objects.equals(addressLine2, address.addressLine2) &&
+                Objects.equals(suburb, address.suburb) &&
+                Objects.equals(city, address.city) &&
+                Objects.equals(state, address.state) &&
+                Objects.equals(postCode, address.postCode) &&
+                Objects.equals(country, address.country);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(addressLine1, addressLine2, suburb, city, state, postCode, country);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "addressLine1='" + addressLine1 + '\'' +
+                ", addressLine2='" + addressLine2 + '\'' +
+                ", suburb='" + suburb + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", postCode='" + postCode + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }
