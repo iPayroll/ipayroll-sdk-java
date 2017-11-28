@@ -18,4 +18,13 @@ public interface AccessTokenRepository {
             @Query("client_secret") String clientSecret,
             @Query("code") String code,
             @Query("redirect_uri") String redirectUri);
+
+    @POST("token")
+    Call<AccessToken> refreshToken(
+            @Query("grant_type")String grantType,
+            @Query("client_id")String clientId,
+            @Query("client_secret") String clientSecret,
+            @Query("scope") String scope,
+            @Query("refresh_token") String refreshToken);
+
 }

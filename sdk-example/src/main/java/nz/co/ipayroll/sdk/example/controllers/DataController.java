@@ -69,7 +69,6 @@ public class DataController {
     private PayslipRepository payslipRepository;
 
     @RequestMapping(value = "aouth2/configuration")
-
     public AOuthClientConfiguration aouth2Configuration(HttpSession session) throws IOException {
         return accessTokenService.getConfiguration();
     }
@@ -109,7 +108,7 @@ public class DataController {
     public Model<LeaveBalance> employeeLeaveBalanceRepository(HttpSession session) throws IOException {
         AccessToken token = getAccessToken(session);
         PagedResources<LeaveBalance> resources = employeeLeaveBalanceRepository.getAll(token.token(), "109").execute().body();
-        LeaveBalance resource = employeeLeaveBalanceRepository.get(token.token(), "109", "In Service Training").execute().body();
+        LeaveBalance resource = employeeLeaveBalanceRepository.get(token.token(), "109", "In%20Service%20Training").execute().body();
         return new Model<LeaveBalance>(resources, resource);
     }
 
@@ -149,7 +148,7 @@ public class DataController {
     public Model<PayElement> payElementRepository(HttpSession session) throws IOException {
         AccessToken token = getAccessToken(session);
         PagedResources<PayElement> resources = payElementRepository.getAll(token.token()).execute().body();
-        PayElement resource = payElementRepository.get(token.token(),   "ACC FIRST WEEK").execute().body();
+        PayElement resource = payElementRepository.get(token.token(),   "ACC FIRST%20WEEK").execute().body();
         return new Model<PayElement>(resources, resource);
     }
 

@@ -8,5 +8,9 @@ public interface AccessTokenService {
 
     AccessToken getAccessToken(String code) throws IOException;
 
+    AccessToken refreshAccessToken(AccessToken accessToken);
+
+    AccessToken refreshAccessToken(String refreshToken);
+
     AOuthClientConfiguration getConfiguration();
 }

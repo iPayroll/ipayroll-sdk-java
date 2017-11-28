@@ -10,7 +10,7 @@ public class RestClientException extends RuntimeException {
         super(error.getErrorDescription(), exception);
         this.error = error;
     }
-    
+
     public RestClientException(Error error) {
         super(error.getErrorDescription());
         this.error = error;

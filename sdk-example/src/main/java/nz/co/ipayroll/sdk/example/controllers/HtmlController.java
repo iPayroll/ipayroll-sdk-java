@@ -28,4 +28,14 @@ public class HtmlController {
         return "redirect:/";
     }
 
+    @RequestMapping(value = "/ipayroll/refreshtoken")
+    public String refreshtoken(String code, HttpSession session) throws IOException {
+        AccessToken accessToken = tokenService.refreshAccessToken("7eab07bc-8f90-4891-b8a0-21da49191f52");
+        System.out.println("AccessToken: "+accessToken);
+        session.setAttribute(IPAYROLL_TOKEN, accessToken);
+        return "redirect:/";
+    }
+
+
+
 }
