@@ -14,6 +14,7 @@ import nz.co.ipayroll.api.sdk.oauth.AOuthClientConfiguration;
 import nz.co.ipayroll.api.sdk.oauth.AccessTokenRepository;
 import nz.co.ipayroll.api.sdk.oauth.AccessTokenService;
 import nz.co.ipayroll.api.sdk.oauth.vo.AccessToken;
+import okhttp3.HttpUrl;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -45,7 +46,22 @@ public class AccessTokenServiceImpl implements AccessTokenService {
         Call<AccessToken> call = accessTokenRepository.token(GRANT_TYPE, clientId, clientSecret, code, redirectUrl);
 
         Response<AccessToken> response = checkError(call);
-        return response.body();
+        
+        String method = response.raw().request().method();
+        String url = response.raw().request().url().toString();
+        int responseCode = response.code();
+        
+        String headers = response.raw().request().headers().toString();
+        AccessToken accessToken = response.body();
+        
+        System.out.println("***** Request *****");
+        System.out.println(method + " " + url);
+        System.out.println(headers);
+
+        System.out.println("***** Response *****");
+        System.out.println("Code: " + responseCode);
+        System.out.println(accessToken);
+        return accessToken;
     }
 
     @Override

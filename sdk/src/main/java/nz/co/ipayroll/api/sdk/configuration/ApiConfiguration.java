@@ -46,7 +46,7 @@ public class ApiConfiguration {
                 .addConverterFactory(GsonConverterFactory.create());
 
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
-        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        logInterceptor = logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = httpClient
                 .addInterceptor(chain -> {
