@@ -25,7 +25,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@PropertySource("classpath:application.default.properties")
 @PropertySource("classpath:application.properties")
 @ComponentScan("nz.co.ipayroll.api.sdk")
 public class ApiConfiguration {
